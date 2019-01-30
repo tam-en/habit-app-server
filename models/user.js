@@ -1,4 +1,4 @@
-const bycrpt = require('bcryptjs');
+const bcrypt = require('bcryptjs');
 const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema({
@@ -41,7 +41,7 @@ userSchema.methods.isAuthenticated = function(password) {
 }
 
 // Use Mongoose's version of a beforeCreate hook; use to hash password
-userSchema.pre('save', funmction(next){
+userSchema.pre('save', function(next){
   this.password = bcrypt.hashSync(this.password, 12);
   next();
 });

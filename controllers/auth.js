@@ -45,7 +45,6 @@ router.post('/signup', (req, res) => {
 	// TODO: debug statements; remover when no longer needed
 	console.log('In the POST auth/signup route');
 	console.log(req.body);
-
 	db.User.findOne({ email: req.body.email })
 	.then(user => {
 		if(user){
@@ -53,16 +52,16 @@ router.post('/signup', (req, res) => {
 			return res.status(409).send('That email is already in use.');
 		}
 		db.User.create(req.body)
-		.then(createdUser) => {
+		.then(createdUser => {
 			// We created a new user. Now we need to create and send a token for them.
 			const token = jwt.sign(createdUser.toJSON(), process.env.JWT_SECRET_KEY, {
 				expiresIn: 60 * 60 * 24 //24 hours in seconds
 			});
 			res.send({token: token});
-		}
+		})
 		.catch(err => {
-			console.log("error creating a new user in POST auth/signup");
-			res.status().send('database error')
+			console.log("error creating a new user in POST auth/signup", err);
+			res.status(403).send('database error')
 		})
 	})
 	.catch(err => {
@@ -72,10 +71,10 @@ router.post('/signup', (req, res) => {
 });
 
 // This is what is returned when client queries for new user data
-router.get('/current/user', (req, res) => {
+router.post('/current/user', (req, res) => {
   // TODO: Remove this console log when not needed anymore
   console.log('GET /auth/current/user STUB');
-  
+
   if(!req.user || !req.user.id){
   	return res.status(401).send({ user: null });
   }
