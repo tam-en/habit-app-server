@@ -2,7 +2,7 @@ require('dotenv').config();
 const cors = require('cors');
 const express = require('express');
 const favicon = require('serve-favicon');
-const logger = require('morgan');
+const logger = require('morgan'); //logger for error reporting in the terminal
 const path = require('path');
 
 // App instance
