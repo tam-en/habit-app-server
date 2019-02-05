@@ -7,20 +7,21 @@ const habitSchema = new mongoose.Schema({
 		minlength: 2,
 		maxlength: 100
 	},
-	username:{
-		type: String,
+	timesPerDay:{
+		type: Number,
 		required: true,
 		minlength: 2,
 		maxlength: 25
 	},
-	email: {
-        type: String,
-        trim: true,
-        lowercase: true,
-        unique: true,
-        required: 'Email address is required',
-        match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Please fill a valid email address']
-    }
+	days: [{
+		date: Date,
+		completions: Number,
+		notes: String
+	}],
+	user: {
+		type: mongoose.Schema.Types.ObjectId,
+		ref: 'User'
+	} 
 })
 
 module.exports = mongoose.model('Habit', habitSchema);
