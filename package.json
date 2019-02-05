@@ -4,7 +4,8 @@
   "private": true,
   "main": "index.js",
   "engines": {
-    "node": "10.15.0"
+    "node": "10.15.0",
+    "npm": "6.4.1"
   },
   "scripts": {
     "heroku-postbuild": "cd client && npm install --only=dev && npm install && npm run build"
