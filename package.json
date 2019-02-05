@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
   "name": "habits-track-server",
   "version": "0.0.0",
   "private": true,
@@ -7,6 +8,12 @@
     "node": "10.15.0",
     "npm": "6.4.1"
   },
+=======
+  "name": "mern-token-auth-boiler-wdi-20",
+  "version": "0.0.0",
+  "private": true,
+  "main": "index.js",
+>>>>>>> eccf44e995959a3a24686ff37c3d6ae4ba9a468f
   "scripts": {
     "heroku-postbuild": "cd client && npm install --only=dev && npm install && npm run build"
   },
