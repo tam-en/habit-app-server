@@ -5,31 +5,32 @@ const jwt = require('jsonwebtoken');
 const router = express.Router();
 const db = require('../models');
 
-
-router.get('/', (req, res) => {
-    db.Habit.find({ user: req.user.id })
+// find all of a user's habits
+router.get('/:userid', (req, res) => {
+    db.Habit.find({ user: req.params.userid })
     .then(habits => {
-        res.render('')
+        res.send(habits)
     })
     .catch(err => {
         console.log('error habits/dashoboard GET Route', err)
     })
 })
 
-router.post('/', (req, res) => {
-    db.Habit.create(req.body)
+// Creating a new habit
+router.post('/:userid', (req, res) => {
+    db.Habit.insert(req.body)
     .then(habit => {
-        res.redirect('')
+        res.send('habit')
     })
     .catch(err => {
         console.log('error in /habit/POST Route', err)
     })
 })
 
-
-router.put('/:name', (req, res) => {
+// Edit a habit
+router.put('/:userid', (req, res) => {
     db.Habit.findOneAndUpdate({ 
-        name: req.body.habit.name }, 
+        id: req.params.userid }, 
         req.body, { new: true })
     .then(habit => {
         res.send(habit)
@@ -40,20 +41,32 @@ router.put('/:name', (req, res) => {
     });
 })
 
-router.put('/', (req, res) => {
+// Let a user enter daily completions
+router.put('/:userid/completions', (req, res) => {
     db.Habit.findOneAndUpdate(
-        { user.ref: user.id }, 
-         { $push: { days: req.date, completions: req.completions, notes: req.notes }
+        { name: req.body.habit.name, user: req.params.userid }, 
+         { $push: { days: req.date, completions: req.completions, notes: req.notes }, 
     })
-    .then()
-    .catch()
+    .then(habit => {
+        res.send(habit)
+    })
+    .catch(err =>{
+		console.log(err);
+		res.status(500).send({message: 'Server Error'})
+	});
 })
 
-router.delete('/', (req, res) => {
-    db.Habits.findOneAndDelete({ name: req.body.habit.name })
-    .then()
-    .catch
-})
+// delete a user's whole habit
+router.delete('/:userid', (req, res) => {
+    db.Habits.findOneAndDelete({ name: req.body.habit.name, user: req.params.userid })
+    .then(() => {
+        res.status(204).send({ messgae: 'successful Deletion' })
+    })
+    .catch(err =>{
+            console.log(err);
+            res.status(500).send({message: 'Server Error'})
+        });
+    });
 
 
 module.exports = router;
