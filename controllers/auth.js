@@ -90,6 +90,3 @@ router.post('/current/user', (req, res) => {
 });
 
 module.exports = router;
-
-
-
