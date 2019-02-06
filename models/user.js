@@ -2,27 +2,6 @@ const bcrypt = require('bcryptjs');
 const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema({
-<<<<<<< HEAD
-  name: {
-    type: String,
-    required: true,
-    minlength: 1,
-    maxlength: 99
-  },
-  email: { // TODO: Need to add email validation
-    type: String,
-    required: true,
-    unique: true,
-    minlength: 5,
-    maxlength: 99
-  },
-  password: {
-    type: String,
-    required: true,
-    minlength: 6,
-    maxlength: 99
-  }
-=======
   username: {
     type: String,
     required: true,
@@ -43,7 +22,6 @@ const userSchema = new mongoose.Schema({
         required: 'Email address is required',
         match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Please fill a valid email address']
     }
->>>>>>> eccf44e995959a3a24686ff37c3d6ae4ba9a468f
 });
 
 // Override 'toJSON' to prevent the password from being returned with the user
@@ -52,11 +30,7 @@ userSchema.set('toJSON', {
     const userJson = {
       id: user._id,
       email: user.email,
-<<<<<<< HEAD
-      name: user.name
-=======
       username: user.name
->>>>>>> eccf44e995959a3a24686ff37c3d6ae4ba9a468f
     }
     return userJson;
   }
