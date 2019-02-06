@@ -21,6 +21,7 @@ router.post('/:userid', (req, res) => {
     db.Habit.insert({
         name: req.body.name,
         timesPerDay: req.body.timesPerDay,
+        description: req.body.description,
         days: [],
         user: req.body.user
     })
