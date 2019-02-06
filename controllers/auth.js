@@ -5,6 +5,7 @@ const jwt = require('jsonwebtoken');
 const router = express.Router();
 const db = require('../models');
 
+
 // POST /auth/login route - returns a JWT
 router.post('/login', (req, res) => {
   //res.send('POST /auth/signup');
