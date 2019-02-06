@@ -33,6 +33,7 @@ app.use('/auth', expressJwt({
 }).unless({
 	path: [{ url: '/auth/login', methods: ['POST']}, { url: '/auth/signup', methods: ['POST'] }]
 }), require('./controllers/auth'));
+app.use('/habits', require('./controllers/habits'))
 
 // This is the catch-all route. Ideally you don't get here unless you made a mistake on your front-end
 app.get('*', function(req, res, next) {
