@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const habitSchema = new mongoose.Schema({
-	username:{
+	name:{
 		type: String,
 		min: 3,
 		max:25, 
