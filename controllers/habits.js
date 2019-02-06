@@ -18,9 +18,14 @@ router.get('/:userid', (req, res) => {
 
 // Creating a new habit
 router.post('/:userid', (req, res) => {
-    db.Habit.insert(req.body)
+    db.Habit.insert({
+        name: req.body.name,
+        timesPerDay: req.body.timesPerDay,
+        days: [],
+        user: req.body.user
+    })
     .then(habit => {
-        res.send('habit')
+        res.status(200).send('habit')
     })
     .catch(err => {
         res.status(404).send('Error made in POST habit route')
