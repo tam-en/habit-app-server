@@ -18,7 +18,7 @@ router.get('/:userid', (req, res) => {
 
 // Creating a new habit
 router.post('/:userid', (req, res) => {
-    db.Habit.insert({
+    db.Habit.create({
         name: req.body.name,
         timesPerDay: req.body.timesPerDay,
         description: req.body.description,
