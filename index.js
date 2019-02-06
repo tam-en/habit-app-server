@@ -2,7 +2,6 @@ require('dotenv').config();
 const cors = require('cors');
 const express = require('express');
 const expressJwt = require('express-jwt');
-const favicon = require('serve-favicon');
 const logger = require('morgan'); //logger for error reporting in the terminal
 const path = require('path');
 
@@ -10,7 +9,6 @@ const path = require('path');
 const app = express();
 
 // Set up middleware
-app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(cors());
 app.use(express.json({limit: '50mb'}));

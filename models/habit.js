@@ -1,11 +1,11 @@
 const mongoose = require('mongoose');
 
 const habitSchema = new mongoose.Schema({
-	name: {
+	name:{
 		type: String,
-		required: true,
-		minlength: 2,
-		maxlength: 100
+		min: 3,
+		max:25, 
+		required: true
 	},
 	timesPerDay:{
 		type: Number,

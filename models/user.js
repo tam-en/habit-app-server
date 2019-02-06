@@ -2,7 +2,11 @@ const bcrypt = require('bcryptjs');
 const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema({
+<<<<<<< HEAD
   username: {
+=======
+  name: {
+>>>>>>> bd79921f8b0d1182a0c45d3f6c3e65e4af7928c8
     type: String,
     required: true,
     minlength: 2,
@@ -30,7 +34,11 @@ userSchema.set('toJSON', {
     const userJson = {
       id: user._id,
       email: user.email,
+<<<<<<< HEAD
       username: user.name
+=======
+      name: user.name
+>>>>>>> bd79921f8b0d1182a0c45d3f6c3e65e4af7928c8
     }
     return userJson;
   }
