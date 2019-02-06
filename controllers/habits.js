@@ -26,7 +26,7 @@ router.post('/:userid', (req, res) => {
         user: req.body.user
     })
     .then(habit => {
-        res.status(200).send('habit')
+        res.status(200).send(habit)
     })
     .catch(err => {
         res.status(404).send('Error made in POST habit route')
