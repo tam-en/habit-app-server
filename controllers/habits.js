@@ -18,9 +18,14 @@ router.get('/:userid', (req, res) => {
 
 // Creating a new habit
 router.post('/:userid', (req, res) => {
-    db.Habit.insert(req.body)
+    db.Habit.insert({
+        name: req.body.name,
+        timesPerDay: req.body.timesPerDay,
+        days: [],
+        user: req.body.user
+    })
     .then(habit => {
-        res.send('habit')
+        res.status(200).send('habit')
     })
     .catch(err => {
         res.status(404).send('Error made in POST habit route')
@@ -45,7 +50,7 @@ router.put('/:userid', (req, res) => {
 // Let a user enter daily completions
 router.put('/:userid/completions', (req, res) => {
     db.Habit.findOneAndUpdate(
-        { name: req.body.habit.name, user: req.params.userid }, 
+        { id: req.params.habit.id }, 
          { $push: { days: req.date, completions: req.completions, notes: req.notes }, 
     })
     .then(habit => {
@@ -54,12 +59,10 @@ router.put('/:userid/completions', (req, res) => {
     .catch(err =>{
 		console.log(err);
 		res.status(500).send({message: 'Server Error'})
-	});
-})
-
-// delete a user's whole habit
+    });
+    
 router.delete('/:userid', (req, res) => {
-    db.Habits.findOneAndDelete({ name: req.body.habit.name, user: req.params.userid })
+    db.Habits.findOneAndDelete({ name: req.body.habit.id, user: req.params.userid })
     .then(() => {
         res.status(204).send({ messgae: 'successful Deletion' })
     })
