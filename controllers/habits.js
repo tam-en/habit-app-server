@@ -23,6 +23,7 @@ router.post('/:userid', (req, res) => {
         res.send('habit')
     })
     .catch(err => {
+        res.status(404).send('Error made in POST habit route')
         console.log('error in /habit/POST Route', err)
     })
 })
