@@ -60,6 +60,7 @@ router.put('/:userid/completions', (req, res) => {
 		console.log(err);
 		res.status(500).send({message: 'Server Error'})
     });
+});
     
 router.delete('/:userid', (req, res) => {
     db.Habits.findOneAndDelete({ name: req.body.habit.id, user: req.params.userid })
