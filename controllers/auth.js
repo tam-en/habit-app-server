@@ -15,22 +15,24 @@ router.post('/login', (req, res) => {
 	// Find out if user is in db (for login, you would hope so)
 	db.User.findOne({ email: req.body.email })
 	.then(user => {
+		console.log('a', user); 
 		// make sure there's a user AND a password
 		if(!user || !user.password){
 			return res.status(400).send('User not found')
 		};
-
+		console.log('b'); 
 		// now that we know there's a user and password, check to see if they're in the db
 		if(!user.isAuthenticated(req.body.password)){
 			//invalid user
+			console.log('c'); 
 			return res.status(401).send('Invalid credentials.')
 		};
-
+		console.log('d'); 
 		// valid user, password autheticated. now they need a token.
 		const token = jwt.sign(user.toJSON(), process.env.JWT_SECRET_KEY, {
 			expiresIn: 60 * 60 * 24 //24 hours in seconds
 		});
-
+		console.log('e', token); 
 		// send the token!
 		res.send({ token: token });
 	})
