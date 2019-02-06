@@ -18,6 +18,11 @@ const habitSchema = new mongoose.Schema({
 		completions: Number,
 		notes: String
 	}],
+	description: {
+		type: String,
+		min: 2,
+		max: 200
+	},
 	user: {
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'User'
