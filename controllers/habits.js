@@ -66,7 +66,7 @@ router.put('/completions/:userid', (req, res) => {
         } else {
             console.log("Creating new day in completions array")
             // today's completion doesn't exist yet, need to be created and pushed
-            newDaysArray = newDaysArray.push({req.body.dayData})
+            newDaysArray = newDaysArray.push(req.body.dayData)
         }
         db.findOneAndUpdate({ id: habit.id }, {days: newDaysArray})
         .then(habit => {
