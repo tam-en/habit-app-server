@@ -55,7 +55,7 @@ router.put('/completions/:userid', (req, res) => {
     .then(habit => {
         dates = habit.days.map((date) => {
             return date.date
-        }
+        })
         const indexOfToday = dates.indexOf(today)
         const newDaysArray = habit.days
         if(indexOfToday != -1) {
