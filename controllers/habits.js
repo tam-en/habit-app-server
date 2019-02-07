@@ -58,6 +58,7 @@ router.put('/completions/:userid', (req, res) => {
         })
         const indexOfToday = dates.indexOf(today)
         var newDaysArray = habit.days
+        console.log("newDaysArray=", newDaysArray)
         if(indexOfToday != -1) {
             console.log("Completion day already exists, ending completion")
             // today's completion aready exists, needs to be edited       
