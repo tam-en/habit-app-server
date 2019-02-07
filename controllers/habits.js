@@ -50,7 +50,7 @@ router.put('/:userid', (req, res) => {
 
 // Get the daily completion data to store as a state in the HabitDetail component
 router.get('/completion/:userid', (req, res) => {
-    db.Habit.findById(req.body.habit.id)
+    db.Habit.findById(req.body.habit.banana)
     .then(habit => {
         res.status(200).send(habit.days)
     })
