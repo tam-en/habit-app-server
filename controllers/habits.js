@@ -57,7 +57,7 @@ router.put('/completions/:userid', (req, res) => {
             return date.date
         })
         const indexOfToday = dates.indexOf(today)
-        const newDaysArray = habit.days
+        var newDaysArray = habit.days
         if(indexOfToday != -1) {
             console.log("Completion day already exists, ending completion")
             // today's completion aready exists, needs to be edited       
@@ -65,7 +65,7 @@ router.put('/completions/:userid', (req, res) => {
         } else {
             console.log("Creating new day in completions array")
             // today's completion doesn't exist yet, need to be created and pushed
-            newDaysArray.push({req.body})
+            newDaysArray = newDaysArray.push({req.body})
         }
         db.findOneAndUpdate({ id: habit.id }, {days: newDaysArray})
         .then(habit => {
