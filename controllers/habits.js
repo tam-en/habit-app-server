@@ -12,7 +12,7 @@ router.get('/:userid', (req, res) => {
         res.send(habits)
     })
     .catch(err => {
-        console.log('error habits/dashoboard GET Route', err)
+        console.log('error habits/dashboard GET Route', err)
     })
 })
 
@@ -62,11 +62,11 @@ router.put('/completions/:userid', (req, res) => {
         if(indexOfToday != -1) {
             console.log("Completion day already exists, ending completion")
             // today's completion aready exists, needs to be edited       
-            newDaysArray[indexOfToday] = req.body
+            newDaysArray[indexOfToday] = req.body.dayData
         } else {
             console.log("Creating new day in completions array")
             // today's completion doesn't exist yet, need to be created and pushed
-            newDaysArray = newDaysArray.push(req.body)
+            newDaysArray = newDaysArray.push({req.body.dayData})
         }
         db.findOneAndUpdate({ id: habit.id }, {days: newDaysArray})
         .then(habit => {
