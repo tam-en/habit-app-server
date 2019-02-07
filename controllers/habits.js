@@ -48,10 +48,22 @@ router.put('/:userid', (req, res) => {
     });
 })
 
+// Get the daily completion data to store as a state in the HabitDetail component
+router.get('/completion/:userid', (req, res) => {
+    db.Habit.findById(req.body.habit.id)
+    .then(habit => {
+        res.status(200).send(habit.days)
+    })
+    .catch(err => {
+        res.send("Error in the GET completions route");
+        console.log("Error in the GET completions route", err)
+    })
+}
+
 // Let a user enter daily completions
 router.put('/completions/:userid', (req, res) => {
     let today = req.body.date
-    db.Habit.findbyId(req.params.habit.id)
+    db.Habit.findById(req.params.habit.id)
     .then(habit => {
         dates = habit.days.map((date) => {
             return date.date
