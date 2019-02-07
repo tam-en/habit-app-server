@@ -49,12 +49,32 @@ router.put('/:userid', (req, res) => {
 })
 
 // Let a user enter daily completions
-router.put('/:userid/completions', (req, res) => {
-    db.Habit.findOneAndUpdate(
-        { id: req.params.habit.id }, 
-         { $push: { days: req.date, completions: req.completions, notes: req.notes }, 
-    })
+router.put('/completions/:userid', (req, res) => {
+    let today = req.body.date
+    db.Habit.findbyId(req.params.habit.id)
     .then(habit => {
+        dates = habit.days.map((date) => {
+            return date.date
+        }
+        const indexOfToday = dates.indexOf(today)
+        const newDaysArray = habit.days
+        if(indexOfToday != -1) {
+            console.log("Completion day already exists, ending completion")
+            // today's completion aready exists, needs to be edited       
+            newDaysArray[indexOfToday] = req.body
+        } else {
+            console.log("Creating new day in completions array")
+            // today's completion doesn't exist yet, need to be created and pushed
+            newDaysArray.push({req.body})
+        }
+        db.findOneAndUpdate({ id: habit.id }, {days: newDaysArray})
+        .then(habit => {
+            res.status(200).send(habit)
+        })
+        .catch(err => {
+            res.send("ERORR!")
+        })
+       
         res.send(habit)
     })
     .catch(err =>{
