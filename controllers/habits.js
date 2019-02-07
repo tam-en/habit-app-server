@@ -51,7 +51,7 @@ router.put('/:userid', (req, res) => {
 // Let a user enter daily completions
 router.put('/completions/:userid', (req, res) => {
     let today = req.body.date
-    db.Habit.findbyId(req.params.habit.id)
+    db.Habit.findbyId(req.params.habit._id)
     .then(habit => {
         dates = habit.days.map((date) => {
             return date.date
