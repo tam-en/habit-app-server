@@ -58,7 +58,7 @@ router.get('/completion/:userid/:habitId', (req, res) => {
         res.send("Error in the GET completions route");
         console.log("Error in the GET completions route", err)
     })
-}
+})
 
 // Let a user enter daily completions
 router.put('/completions/:userid', (req, res) => {
