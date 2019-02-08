@@ -36,8 +36,8 @@ router.post('/:userid', (req, res) => {
 
 // Edit a habit
 router.put('/:userid', (req, res) => {
-    db.Habit.findOneAndUpdate({ 
-        id: req.params.userid }, 
+    db.Habit.findOneAndUpdate({
+        id: req.params.userid },
         req.body, { new: true })
     .then(habit => {
         res.send(habit)
@@ -61,41 +61,40 @@ router.put('/:userid', (req, res) => {
 // })
 
 // Let a user enter daily completions
-router.put('/completions/:userid/:habitId', (req, res) => {
-    let today = req.body.date
+router.put('/completions/:habitId', (req, res) => {
     db.Habit.findById(req.params.habitId)
     .then(habit => {
         dates = habit.days.map((date) => {
-            return date.date
-        })
-        const indexOfToday = dates.indexOf(today)
-        var newDaysArray = habit.days
-        console.log("newDaysArray=", newDaysArray)
+          // Thanks Stack Overflow
+          // https://stackoverflow.com/questions/23593052/format-javascript-date-to-yyyy-mm-dd
+          return date.date.toISOString().split('T')[0];
+        });
+        const indexOfToday = dates.indexOf(req.body.dayData.date)
         if(indexOfToday != -1) {
-            console.log("Completion day already exists, ending completion")
-            // today's completion aready exists, needs to be edited       
-            newDaysArray[indexOfToday] = req.body.dayData
-        } else {
-            console.log("Creating new day in completions array")
-            // today's completion doesn't exist yet, need to be created and pushed
-            newDaysArray = newDaysArray.push(req.body.dayData)
+            // today's completion aready exists, needs to be edited
+            habit.days[indexOfToday] = req.body.dayData
         }
-        db.findOneAndUpdate({ id: habit.id }, {days: newDaysArray})
-        .then(habit => {
-            res.status(200).send(habit)
+        else {
+            // today's completion doesn't exist yet, need to be created and pushed
+            habit.days.push(req.body.dayData);
+        }
+
+        // We can push to the array, but then we need to save it!
+        habit.save()
+        .then(savedHabit => {
+          res.status(200).send(savedHabit)
         })
         .catch(err => {
-            res.send("ERORR!")
-        })
-       
-        res.send(habit)
+          console.log('error', err)
+          res.status(501).send({message: "ERROR!"});
+        });
     })
     .catch(err =>{
-		console.log(err);
-		res.status(500).send({message: 'Server Error'})
+  		console.log(err);
+  		res.status(500).send({message: 'Server Error'})
     });
 });
-    
+
 router.delete('/:userid', (req, res) => {
     db.Habits.findOneAndDelete({ name: req.body.habit.id, user: req.params.userid })
     .then(() => {
