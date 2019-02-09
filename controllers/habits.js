@@ -36,7 +36,7 @@ router.post('/:userid', (req, res) => {
 
 // Edit a habit
 router.put('/:userid', (req, res) => {
-    db.Habit.findOneAndUpdate({ _id: req.params.id }, req.body, {new: true})
+    db.Habit.findOneAndUpdate({ id: req.params.id }, req.body, {new: true})
     .then(habit => {
         res.send(habit)
     })
