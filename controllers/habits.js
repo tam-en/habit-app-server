@@ -94,7 +94,7 @@ router.put('/completions/:habitId', (req, res) => {
 });
 
 router.delete('/:userid', (req, res) => {
-    db.Habits.findOneAndDelete({ name: req.body.habit.id, user: req.params.userid })
+    db.Habit.findOneAndDelete({ name: req.body.habit.id, user: req.params.userid })
     .then(() => {
         res.status(204).send({ messgae: 'successful Deletion' })
     })
