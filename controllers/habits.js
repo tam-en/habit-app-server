@@ -99,10 +99,10 @@ router.delete('/:habitid', (req, res) => {
         res.status(204).send({ messgae: 'successful Deletion' })
     })
     .catch(err =>{
-            console.log(err);
-            res.status(500).send({message: 'Server Error'})
-        });
+        console.log(err);
+        res.status(500).send({message: 'Server Error'})
     });
+});
 
 
 module.exports = router;
